@@ -26,7 +26,7 @@ exports.addBook = async (req, res) => {
 
   await book.save();
 
-  return res.status(200).json({
+  return res.status(201).json({
    payload: book,
    message: 'New book created',
    status: 200,
@@ -143,6 +143,24 @@ exports.deleteBook = async (req, res) => {
   return res.status(200).json({
    payload: bookId,
    message: 'Book deleted',
+   status: 200,
+  });
+ } catch (error) {
+  console.log(error);
+  return res.status(503).json({
+   payload: null,
+   status: 503,
+   message: 'Failed to delete book',
+  });
+ }
+};
+
+exports.getAllBook = async (req, res) => {
+ try {
+  const book = await Book.find({});
+  return res.status(200).json({
+   payload: book,
+   message: 'Reterived all books',
    status: 200,
   });
  } catch (error) {
